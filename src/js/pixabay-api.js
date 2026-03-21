@@ -1,9 +1,9 @@
-export function searchImage(userValue) {
+export function getImagesByQuery(query) {
   const URL = 'https://pixabay.com/api/';
   const key = 'key=55115585-71990795827d4e19bcf2e84dd';
 
   const params = new URLSearchParams({
-    q: userValue,
+    q: query,
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,

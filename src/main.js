@@ -1,12 +1,12 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { createMarkup } from './js/render-functions';
-import { searchImage } from './js/pixabay-api';
+import { createGallery } from './js/render-functions';
+import { getImagesByQuery } from './js/pixabay-api';
 
 const form = document.querySelector('.form');
 const input = document.querySelector('input');
-const list = document.querySelector('.list');
+const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 
 form.addEventListener('submit', handleSubmit);
@@ -17,10 +17,10 @@ function handleSubmit(event) {
 
   const inputValue = input.value;
 
-  searchImage(inputValue)
-    .then(data => createMarkup(data.hits, list))
+  getImagesByQuery(inputValue)
+    .then(data => createGallery(data.hits, gallery))
     .catch(() => {
-      list.innerHTML = '';
+      gallery.innerHTML = '';
       iziToast.error({
         message: `Sorry, there are no images matching your search query. Please try again!`,
         theme: 'dark',

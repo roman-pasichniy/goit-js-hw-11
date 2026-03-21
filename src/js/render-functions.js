@@ -1,7 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-export function createMarkup(arr, listElement) {
+export function createGallery(arr, listElement) {
   const markup = arr
     .map(
       ({
@@ -43,7 +43,7 @@ export function createMarkup(arr, listElement) {
   gallery.refresh();
 }
 
-let gallery = new SimpleLightbox('.list a', {
+let gallery = new SimpleLightbox('.gallery a', {
   sourceAttr: 'href',
   captionsData: 'alt',
   captionDelay: 250,
