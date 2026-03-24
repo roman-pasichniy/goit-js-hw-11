@@ -1,7 +1,12 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-export function createGallery(arr, listElement) {
+let gallery;
+
+const galleryEl = document.querySelector('.gallery');
+const loaderEl = document.querySelector('.loader');
+
+export function createGallery(arr) {
   const markup = arr
     .map(
       ({
@@ -12,39 +17,56 @@ export function createGallery(arr, listElement) {
         views,
         comments,
         downloads,
-      }) => `
-        <li class="item">
-        <a class="item-link" href="${largeImageURL}">
-        <img class="item-img" src="${webformatURL}" alt="${tags}" />
-        <div class="wrapper">
-        <div class="span-wrapper">
-        <span class="span-name">Likes</span>
-        <span class="span-value">${likes}</span>
-        </div>
-        <div class="span-wrapper">
-        <span class="span-name">Views</span>
-        <span class="span-value">${views}</span>
-        </div>
-        <div class="span-wrapper">
-        <span class="span-name">Comments</span>
-        <span class="span-value">${comments}</span>
-        </div>
-        <div class="span-wrapper">
-        <span class="span-name">Downloads</span>
-        <span class="span-value">${downloads}</span>
-        </div>
-        </div>
-        </a>
-        </li>
-        `
+      }) => {
+        return `
+          <li class="item">
+            <a class="item-link" href="${largeImageURL}">
+              <img class="item-img" src="${webformatURL}" alt="${tags}" />
+              <div class="wrapper">
+                <div class="span-wrapper">
+                  <span class="span-name">Likes</span>
+                  <span class="span-value">${likes}</span>
+                </div>
+                <div class="span-wrapper">
+                  <span class="span-name">Views</span>
+                  <span class="span-value">${views}</span>
+                </div>
+                <div class="span-wrapper">
+                  <span class="span-name">Comments</span>
+                  <span class="span-value">${comments}</span>
+                </div>
+                <div class="span-wrapper">
+                  <span class="span-name">Downloads</span>
+                  <span class="span-value">${downloads}</span>
+                </div>
+              </div>
+            </a>
+          </li>
+        `;
+      }
     )
     .join('');
-  listElement.innerHTML = markup;
-  gallery.refresh();
+
+  galleryEl.innerHTML = markup;
+
+  if (!gallery) {
+    gallery = new SimpleLightbox('.gallery a', {
+      captionsData: 'alt',
+      captionDelay: 250,
+    });
+  } else {
+    gallery.refresh();
+  }
 }
 
-let gallery = new SimpleLightbox('.gallery a', {
-  sourceAttr: 'href',
-  captionsData: 'alt',
-  captionDelay: 250,
-});
+export function clearGallery() {
+  galleryEl.innerHTML = '';
+}
+
+export function showLoader() {
+  loaderEl.style.display = 'inline-block';
+}
+
+export function hideLoader() {
+  loaderEl.style.display = 'none';
+}
